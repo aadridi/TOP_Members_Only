@@ -8,21 +8,22 @@
 		<h1>Sign Up</h1>
 		<form action="/sign-up" method="POST">
 			<label for="email">Email:</label>
-			<input id="email" name="email" type="email" required autocomplete="email" />
+			<input id="email" name="email" type="email" required autocomplete="email" value="<%= validFieldsData.email %>" />
 
 			<label for="first_name">First Name:</label>
-			<input id="first_name" name="first_name" type="text" autocomplete="given-name" />
+			<input id="first_name" name="first_name" type="text" autocomplete="given-name" value="<%= validFieldsData.first_name %>" />
 
 			<label for="last_name">Last Name:</label>
-			<input id="last_name" name="last_name" type="text" autocomplete="family-name" />
+			<input id="last_name" name="last_name" type="text" autocomplete="family-name" value="<%= validFieldsData.last_name %>" />
 
 			<label for="password">Password:</label>
 			<input id="password" name="password" type="password" required autocomplete="new-password" />
 
 			<label for="password_confirmation">Password Confirmation:</label>
-			<input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" />
+			<input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required />
 
 			<button type="submit">Sign Up!</button>
 		</form>
+		<%- include("partials/errors.ejs") %>
 	</body>
 </html>
