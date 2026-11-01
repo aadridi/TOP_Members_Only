@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Messages</title>
+	</head>
+	<body>
+        <h1>Messages</h1>
+        <fieldset>
+            <legend>Write a new message:</legend>
+        <form action="/messages/new" method="POST">
+            <label for="title">Title:</label>
+			<input id="title" name="title" type="text" required placeholder="Enter the title of your message..."/>
+
+			<label for="text_message">Your Message:</label>
+			<textarea id="text_message" name="text_message" required placeholder="Enter your message here..." maxlength="255"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+        </fieldset>
+        <ul>
+            <% messages.forEach((message) => { %>
+                <li>
+                    <h3><%= message.title %></h3>
+                    <p><%= message.text_message %></p>
+                    <i><%= message.first_name %> <%= message.last_name %></i>
+                    <time><%= message.created_at %></time>
+                </li>
+            <% }) %>
+        </ul>
+	</body>
+</html>

@@ -3,9 +3,14 @@ const path = require('node:path');
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const { getUserByEmail } = require('./queries/users');
+const { getUserByEmail, getUserById } = require('./queries/users');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 const signupRouter = require('./routes/signupRouter');
+const loginRouter = require('./routes/loginRouter');
+const logoutRouter = require('./routes/logoutRouter');
+const messageRouter = require('./routes/messageRouter');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
@@ -34,12 +39,12 @@ passport.use(
 			const user = await getUserByEmail(email);
 
 			if (user === null) {
-				return done(null, false, { message: 'Incorrect username or password.' });
+				return done(null, false, { message: 'Incorrect email or password.' });
 			}
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) {
 				// passwords do not match!
-				return done(null, false, { message: 'Incorrect username or password.' });
+				return done(null, false, { message: 'Incorrect email or password.' });
 			}
 
 			return done(null, user);
@@ -49,10 +54,43 @@ passport.use(
 	}),
 );
 
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+	try {
+		const user = await getUserById(id);
+		done(null, user);
+	} catch (err) {
+		done(err);
+	}
+});
+
+// Middleware to make user object available for all views
+app.use((req, res, next) => {
+	res.locals.user = req.user;
+	next();
+});
+
+// Test authentification route
+app.get('/test-auth', (req, res) => {
+	console.log(req.user);
+	res.send('Check the terminal');
+});
+
 // Sign-up routes
 app.use('/sign-up', signupRouter);
+app.use('/log-in', loginRouter);
+app.use('/log-out', logoutRouter);
+
+// Message routes
+app.use('/messages', messageRouter);
 
 app.get('/', (req, res) => res.render('index'));
+
+// Error handling middleware
+app.use(errorHandler);
 
 app.listen(3000, (error) => {
 	if (error) {

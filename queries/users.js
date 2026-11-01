@@ -10,4 +10,9 @@ async function getUserByEmail(email) {
 	return result.rows[0] || null;
 }
 
-module.exports = { createUser, getUserByEmail };
+async function getUserById(id) {
+	const result = await pool.query('SELECT * from users WHERE id=$1', [id]);
+	return result.rows[0] || null;
+}
+
+module.exports = { createUser, getUserByEmail, getUserById };
