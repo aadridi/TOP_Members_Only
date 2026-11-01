@@ -1,11 +1,13 @@
 const { Router } = require('express');
-const { getMessages, postMessage } = require('../controllers/messageController');
-const { isAuthenticated, isMember } = require('../middlewares/authMiddleware');
+const { getMessages, postMessage, postDeleteMessage } = require('../controllers/messageController');
+const { isAuthenticated, isMember, isAdmin } = require('../middlewares/authMiddleware');
 
 const messageRouter = Router();
 
-messageRouter.get('/', isAuthenticated, isMember, getMessages);
+messageRouter.get('/', getMessages);
 
 messageRouter.post('/new', isAuthenticated, isMember, postMessage);
+
+messageRouter.post('/:id/delete', isAuthenticated, isAdmin, postDeleteMessage);
 
 module.exports = messageRouter;

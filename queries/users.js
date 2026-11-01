@@ -15,4 +15,8 @@ async function getUserById(id) {
 	return result.rows[0] || null;
 }
 
-module.exports = { createUser, getUserByEmail, getUserById };
+async function updateMembership(id) {
+	await pool.query('UPDATE users SET is_member = true WHERE id=$1', [id]);
+}
+
+module.exports = { createUser, getUserByEmail, getUserById, updateMembership };

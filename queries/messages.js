@@ -9,4 +9,8 @@ async function createMessage(title, author_id, text_message) {
 	await pool.query('INSERT INTO messages (title, author_id, text_message) VALUES ($1, $2, $3)', [title, author_id, text_message]);
 }
 
-module.exports = { getAllMessages, createMessage };
+async function deleteMessage(message_id) {
+	await pool.query('DELETE FROM messages WHERE id=$1', [message_id]);
+}
+
+module.exports = { getAllMessages, createMessage, deleteMessage };

@@ -13,6 +13,13 @@ function isMember(req, res, next) {
 	res.redirect('/');
 }
 
+function isNotMember(req, res, next) {
+	if (req.user.is_member === false) {
+		return next();
+	}
+	res.redirect('/messages');
+}
+
 function isAdmin(req, res, next) {
 	if (req.user.is_admin === true) {
 		return next();
@@ -20,4 +27,4 @@ function isAdmin(req, res, next) {
 	res.redirect('/');
 }
 
-module.exports = { isAuthenticated, isMember, isAdmin };
+module.exports = { isAuthenticated, isMember, isNotMember, isAdmin };

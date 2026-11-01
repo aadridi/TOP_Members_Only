@@ -7,13 +7,18 @@
 	<body>
 		<% if (locals.user) { %>
 			<% if (locals.user.first_name) { %>
-				<h1>WELCOME BACK <%= locals.user.first_name %></h1>
+				<h1>WELCOME BACK <%= locals.user.first_name %> !</h1>
 			<% } else { %>
 				<p>Welcome!</p>
 			<% } %>
 			<form action="/log-out" method="POST">
     			<button type="submit">LOG OUT</button>
 			</form>
+			<% if (!locals.user.is_member) { %>
+				<a href="/become-member">Become a member!</a>
+			<% } else { %>
+				<a href="/messages">Consult messages</a>
+			<% } %>
 		<% } else { %>
 			<p>You are not logged in.</p>
 			<a href="/sign-up">Create an account</a>

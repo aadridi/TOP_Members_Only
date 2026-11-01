@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Become a member!</title>
+	</head>
+	<body>
+		<h1>Become a member!</h1>
+		<form action="/become-member" method="POST">
+			<label for="membershipCode">Enter the secret code:</label>
+			<input id="membershipCode" name="membershipCode" type="password" required />
+
+			<button type="submit">Become a member</button>
+		</form>
+		<%- include("partials/errors.ejs") %>
+	</body>
+</html>

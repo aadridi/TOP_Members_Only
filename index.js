@@ -10,6 +10,7 @@ const signupRouter = require('./routes/signupRouter');
 const loginRouter = require('./routes/loginRouter');
 const logoutRouter = require('./routes/logoutRouter');
 const messageRouter = require('./routes/messageRouter');
+const membershipRouter = require('./routes/membershipRouter');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
@@ -86,6 +87,9 @@ app.use('/log-out', logoutRouter);
 
 // Message routes
 app.use('/messages', messageRouter);
+
+// Get membership route
+app.use('/become-member', membershipRouter);
 
 app.get('/', (req, res) => res.render('index'));
 
